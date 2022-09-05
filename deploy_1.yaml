@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-deployment
+  labels:
+    app: hello
+spec:
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+      - name: hello
+        image: localhost:32000/hello:latest
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-service
+  labels:
+    app: hello
+spec:
+  sessionAffinity: ClientIP
+  type: NodePort
+  selector:
+    app: hello
+  ports:
+    - name: http-hello
+      protocol: "TCP"
+      port: 2000
+      targetPort: 3000
+      nodePort: 30000
