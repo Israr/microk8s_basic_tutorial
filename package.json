@@ -1,0 +1,14 @@
+{
+  "name": "hello",
+  "version": "1.0.0",
+  "description": "Hello World JS Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "Israr Khan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
