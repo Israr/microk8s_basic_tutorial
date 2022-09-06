@@ -18,6 +18,8 @@
     $ microk8s enable registry
     $ microk8s enable dns
     $ microk8s enable dashboard
+    $ k enable dashbaord
+    $ k enable ingress
 ```
 # Create Hello World JS App and Dockerize 
 
@@ -125,7 +127,6 @@ Hello world!
 # Enable Dashboard
 
 ```sh
-$ k enable dashbaord
 # Get token
 $ k create token default
 ```
@@ -150,3 +151,6 @@ spec:
     protocol: TCP
 ```
 
+# Setting up Ingress
+
+TBD
