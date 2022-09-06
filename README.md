@@ -16,6 +16,8 @@
     NAME            STATUS   ROLES    AGE     VERSION
     extp346360020   Ready    <none>   3h43m   v1.24.3-2+63243a96d1c393
     $ microk8s enable registry
+    $ microk8s enable dns
+    $ microk8s enable dashboard
 ```
 # Create Hello World JS App and Dockerize 
 
@@ -118,3 +120,33 @@ hello-service   NodePort    10.152.183.19   <none>        3000:31745/TCP   110s
 $ curl localhost:31745
 Hello world!
 ```
+
+
+# Enable Dashboard
+
+```sh
+$ k enable dashbaord
+# Get token
+$ k create token default
+```
+
+Expose dashboard on a nodeport
+
+```yaml
+kind: Service
+apiVersion: v1
+metadata:
+  name: k8s-dash-svc
+  namespace: kube-system
+spec:
+  selector:
+    k8s-app: kubernetes-dashboard
+  type: NodePort
+  ports:
+  - name: https
+    nodePort: 30443
+    port: 443
+    targetPort: 443
+    protocol: TCP
+```
+
