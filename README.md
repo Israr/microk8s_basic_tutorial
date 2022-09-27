@@ -131,7 +131,7 @@ Hello world!
 $ k create token default
 ```
 
-Expose dashboard on a nodeport
+Expose dashboard on a nodeport (NodePorts can be in range 30000 - 32767)
 
 ```yaml
 kind: Service
