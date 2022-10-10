@@ -154,3 +154,8 @@ spec:
 # Setting up Ingress
 
 TBD
+
+# Using skaffold for Local development
+
+TBD
+
