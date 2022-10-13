@@ -21,6 +21,14 @@
     $ k enable dashbaord
     $ k enable ingress
 ```
+# [Optional] Setting kubectl with microk8s
+
+```sh
+  sudo snap install kubectl --classic
+  microk8s config > ~/.kube/config
+  kubectl get pods
+```
+
 # Create Hello World JS App and Dockerize 
 
 Create a simple file index.js containing
