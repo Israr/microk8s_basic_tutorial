@@ -17,6 +17,7 @@
     extp346360020   Ready    <none>   3h43m   v1.24.3-2+63243a96d1c393
     $ microk8s enable registry
     $ microk8s enable dns
+    # default dns is 8.8.8.8, you can set custom DNS by doing  - micrk8s enable dns:1.1.1.1
     $ microk8s enable dashboard
     $ k enable dashbaord
     $ k enable ingress
@@ -25,6 +26,7 @@
 
 ```sh
   sudo snap install kubectl --classic
+  mkdir ~/.kube
   microk8s config > ~/.kube/config
   kubectl get pods
 ```
