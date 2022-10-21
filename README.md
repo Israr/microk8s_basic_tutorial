@@ -16,12 +16,23 @@
     NAME            STATUS   ROLES    AGE     VERSION
     extp346360020   Ready    <none>   3h43m   v1.24.3-2+63243a96d1c393
     $ microk8s enable registry
-    $ microk8s enable dns
     # default dns is 8.8.8.8, you can set custom DNS by doing  - micrk8s enable dns:1.1.1.1
+    # Use comma seperated list for multiple DNS.
+    # You can modify DNS server with `microk8s kubectl -n kube-system edit configmap/coredns`
+    $ microk8s enable dns
     $ microk8s enable dashboard
     $ k enable dashbaord
     $ k enable ingress
 ```
+[Core Addons](https://github.com/canonical/microk8s-core-addons/tree/main/addons)
+[Community Addons](https://github.com/canonical/microk8s-community-addons/tree/main/addons)
+
+To enable commuinity addons
+
+```sh
+  microk8s enable community
+```
+
 # [Optional] Setting kubectl with microk8s
 
 ```sh
