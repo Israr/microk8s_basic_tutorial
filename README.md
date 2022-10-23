@@ -180,3 +180,31 @@ TBD
 
 TBD
 
+# Interacting with Pods
+
+* Run busybox shell in an interactive console
+```sh
+  kubectl run -i --tty busybox --image=busybox:1.28 --restart=Never --rm=True -- sh
+```
+
+Attaching shell to an existing pod
+
+```sh
+  kubectl exec -i --tty hello-deployment-7dc99db95f-2kdbf -- /bin/sh
+```
+
+* See logs from a pod
+```sh
+  kubectl logs my-pod
+  kubectl logs -l name=myLabel                        # dump pod logs, with label name=myLabel (stdout)
+  kubectl logs -f -l name=myLabel --all-containers    # stream all pods logs with label name=myLabel (stdout)
+  kubectl logs deploy/my-deployment                   # dump Pod logs for a Deployment 
+```
+
+* Copy files to/from running containers
+```
+kubectl cp /tmp/foo_dir my-pod:/tmp/bar_dir            # Copy /tmp/foo_dir local directory to /tmp/bar_dir in a remote pod in the current namespace
+kubectl cp /tmp/foo my-pod:/tmp/bar -c my-container    # Copy /tmp/foo local file to /tmp/bar in a remote pod in a specific container
+kubectl cp /tmp/foo my-namespace/my-pod:/tmp/bar       # Copy /tmp/foo local file to /tmp/bar in a remote pod in namespace my-namespace
+kubectl cp my-namespace/my-pod:/tmp/foo /tmp/bar       # Copy /tmp/foo from a remote pod to /tmp/bar locally
+```
