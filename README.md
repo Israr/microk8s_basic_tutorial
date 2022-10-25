@@ -208,3 +208,41 @@ kubectl cp /tmp/foo my-pod:/tmp/bar -c my-container    # Copy /tmp/foo local fil
 kubectl cp /tmp/foo my-namespace/my-pod:/tmp/bar       # Copy /tmp/foo local file to /tmp/bar in a remote pod in namespace my-namespace
 kubectl cp my-namespace/my-pod:/tmp/foo /tmp/bar       # Copy /tmp/foo from a remote pod to /tmp/bar locally
 ```
+
+# Using Host Storage
+
+```
+microk8s enable hostpath-storage
+```
+TBD
+
+# Using NFS Persistent volume with microk8s
+## Setup an NFS server
+
+Install NFS Server and setup a directory for nfs serving.
+
+```sh
+sudo apt-get install nfs-kernel-server
+sudo mkdir -p /srv/nfs
+sudo chown nobody:nogroup /srv/nfs
+sudo chmod 0777 /srv/nfs
+# Export /srv/nfs for serving via nfs.
+echo '/srv/nfs 10.0.0.0/24(rw,sync,no_subtree_check)' | sudo tee /etc/exports
+sudo systemctl restart nfs-kernel-server
+```
+## Install NFS CSI Driver
+
+```sh
+microk8s enable helm3
+microk8s helm3 repo add csi-driver-nfs https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts
+microk8s helm3 repo update
+microk8s helm3 install csi-driver-nfs csi-driver-nfs/csi-driver-nfs \
+    --namespace kube-system \
+    --set kubeletDir=/var/snap/microk8s/common/var/lib/kubelet
+# Wait for CSI controller and node pods to come up
+microk8s kubectl wait pod --selector app.kubernetes.io/name=csi-driver-nfs --for condition=ready --namespace kube-system
+# ... now do get csidrivers
+microk8s kubectl get csidrivers
+```
+
+TBD . See more at https://microk8s.io/docs/nfs
