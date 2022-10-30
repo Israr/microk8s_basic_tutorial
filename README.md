@@ -214,6 +214,42 @@ kubectl cp my-namespace/my-pod:/tmp/foo /tmp/bar       # Copy /tmp/foo from a re
 ```
 microk8s enable hostpath-storage
 ```
+
+To use hostpath you need to create a PVC (PersistentVolumeClaim) and attach it to a Pod's spec
+
+1. Create a test-pvc.yml file
+```yaml
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-pvc
+spec:
+  accessModes: [ReadWriteOnce]
+  resources: { requests: { storage: 1Gi } }
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-nginx
+spec:
+  volumes:
+    - name: pvc
+      persistentVolumeClaim:
+        claimName: test-pvc
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: pvc
+          mountPath: /hostdata
+```
+2. Apply it  test-pvc.yml
+
+    kubectl apply -f 
+
 TBD
 
 # Using NFS Persistent volume with microk8s
